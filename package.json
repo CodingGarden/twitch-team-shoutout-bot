@@ -13,7 +13,7 @@
   "dependencies": {
     "@types/node": "^13.13.2",
     "@types/tmi.js": "^1.4.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "tmi.js": "^1.5.0"
   },
