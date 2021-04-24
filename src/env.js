@@ -8,7 +8,6 @@ const {
   BOT_USERNAME,
   CHANNEL_NAME,
   CHANNEL_ID,
-  TEAM_NAME,
 } = process.env;
 
 const env = {
@@ -17,7 +16,6 @@ const env = {
   BOT_USERNAME,
   CHANNEL_NAME,
   CHANNEL_ID,
-  TEAM_NAME,
 };
 
 Object

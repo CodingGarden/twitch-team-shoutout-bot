@@ -20,8 +20,8 @@ export async function getChannel(channelId) {
 }
 
 export async function getTeam(teamName) {
-  const { data: { users } } = await twitchAPI.get(`/teams/${teamName}`);
-  return users;
+  const { data: { users, name } } = await twitchAPI.get(`/teams/${teamName}`);
+  return { name, users};
 }
 
 export async function getStream(channelId) {

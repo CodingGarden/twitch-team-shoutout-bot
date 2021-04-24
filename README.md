@@ -30,11 +30,13 @@ TWITCH_OAUTH_TOKEN | Twitch OAuth token for the given BOT_USERNAME - can be obta
 TWITCH_CLIENT_ID | Twitch Client ID used to generate the above token, if using the above service to generate a token, use this Client ID: `q6batx0epp608isickayubi39itsckt`
 CHANNEL_NAME | The twitch channel name to send the messages in.
 CHANNEL_ID | The channel ID of the above CHANNEL_NAME, used to prevent shouting out yourself.
-TEAM_NAME | The name of the team! Must match the team named used by twitch i.e. the one in the team page url e.g. `https://www.twitch.tv/team/livecoders` is `livecoders`
 
 ### Messaging Config
 
-The `src/config.js` file contains the timeout in milliseconds to wait between shoutouts for the same team member and also includes a `getMessage` function that is used to format the message to be sent when a team member is detected. Both of these values can be updated directly in the file.
+The `src/config.js` file contains some values that can be updated to your liking:
+  * The timeout in milliseconds to wait between shoutouts for the same team member
+  * An object `teams` where you can list any number of teams to shout out. The value of each key will be the team name display in the chat message.
+  * A `getMessage` function that is used to format the message to be sent when a team member is detected.
 
 ### Running
 
