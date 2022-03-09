@@ -18,13 +18,13 @@ const client = new tmi.Client({
 });
 
 function initBot(teams) {
-  const membersById = teams.reduce((byId, { users, name }) => {
+  const membersById = teams.reduce((byId, { users, team_name }) => {
     users
       .forEach((member) => {
-        if (!byId.has(member._id)) {
-          byId.set(member._id, []);
+        if (!byId.has(member.user_id)) {
+          byId.set(member.user_id, []);
         }
-        byId.get(member._id).push(config.teams[name]);
+        byId.get(member.user_id).push(config.teams[team_name]);
       });
     return byId;
   }, new Map());
@@ -42,22 +42,24 @@ function initBot(teams) {
     } = tags;
     const name = displayName ?? username;
     if (messageType === 'whisper') return;
-    if (userId !== config.CHANNEL_ID && membersById.has(userId)) {
-      if (!shoutoutsById.has(userId) || shoutoutsById.get(userId) + Number(config.SHOUTOUT_TIMEOUT_MS) < Date.now()) {
+    if (membersById.has(userId)) {
+    // if (userId !== config.CHANNEL_ID && membersById.has(userId)) {
+      if (!shoutoutsById.has(userId)
+        || shoutoutsById.get(userId) + Number(config.SHOUTOUT_TIMEOUT_MS) < Date.now()) {
         shoutoutsById.set(userId, Date.now());
         const {
-          game,
-          status,
+          game_name,
+          title,
         } = await twitchAPI.getChannel(userId);
-        let teams = membersById.get(userId);
-        if (teams.length > 1) {
+        let teamNames = membersById.get(userId);
+        if (teamNames.length > 1) {
           // DO STUFF
-          const lastTeam = teams.pop();
-          teams = teams.join(', ') + ' and ' + lastTeam;
+          const lastTeam = teamNames.pop();
+          teamNames = `${teamNames.join(', ')} and ${lastTeam}`;
         } else {
-          teams = teams[0];
+          [teamNames] = teamNames;
         }
-        client.say(channel, config.sendMessage(name, teams, status, game));
+        client.say(channel, config.sendMessage(name, teamNames, title, game_name));
       }
     }
   });
@@ -65,5 +67,5 @@ function initBot(teams) {
 
 Promise.all(
   Object.keys(config.teams)
-    .map((teamName) => twitchAPI.getTeam(teamName.trim()))
+    .map((teamName) => twitchAPI.getTeam(teamName.trim())),
 ).then(initBot);
