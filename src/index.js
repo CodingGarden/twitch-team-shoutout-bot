@@ -42,8 +42,7 @@ function initBot(teams) {
     } = tags;
     const name = displayName ?? username;
     if (messageType === 'whisper') return;
-    if (membersById.has(userId)) {
-    // if (userId !== config.CHANNEL_ID && membersById.has(userId)) {
+    if (userId !== config.CHANNEL_ID && membersById.has(userId)) {
       if (!shoutoutsById.has(userId)
         || shoutoutsById.get(userId) + Number(config.SHOUTOUT_TIMEOUT_MS) < Date.now()) {
         shoutoutsById.set(userId, Date.now());
