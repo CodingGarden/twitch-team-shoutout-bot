@@ -26,8 +26,8 @@ cp .env.sample .env
 Variable | Description
 --- | ---
 BOT_USERNAME | The twitch username of the bot that will be used to send the messages.
-TWITCH_OAUTH_TOKEN | Twitch OAuth token for the given BOT_USERNAME - can be obtained here: https://twitchapps.com/tmi/
-TWITCH_CLIENT_ID | Twitch Client ID used to generate the above token, if using the above service to generate a token, use this Client ID: `q6batx0epp608isickayubi39itsckt`
+TWITCH_OAUTH_TOKEN | Twitch OAuth token for the given BOT_USERNAME - can be obtained here: https://twitchtokengenerator.com/ (requires the chat:read and chat:edit permissions)
+TWITCH_CLIENT_ID | Twitch Client ID used to generate the above token, if using the above service to generate a token, use this Client ID: `gp762nuuoqcoxypju8c569th9wz7q5`
 CHANNEL_NAME | The twitch channel name to send the messages in.
 CHANNEL_ID | The channel ID of the above CHANNEL_NAME, used to prevent shouting out yourself.
 
@@ -44,4 +44,30 @@ After installing dependencies, creating the `.env` file and updating the `src/co
 
 ```sh
 npm start
+```
+
+### Running with Docker
+
+You can create the `.env` file first to include it in the built image, or you can omit the `.env` file and specify environment variables when you run the image.
+
+```
+docker build -t twitch-team-shoutout-bot .
+```
+
+This assumes the `.env` was built into the image:
+
+```
+docker run twitch-team-shoutout-bot
+```
+
+Run with environment variables (no `.env` in the image):
+
+```
+docker run \
+  -e TWITCH_OAUTH_TOKEN=your-token-here \
+  -e TWITCH_CLIENT_ID=your-client-id-here \
+  -e BOT_USERNAME=your-bot-username-here \
+  -e CHANNEL_NAME=your-channel-name-here \
+  -e CHANNEL_ID=your-channel-id-here \
+  twitch-team-shoutout-bot
 ```
