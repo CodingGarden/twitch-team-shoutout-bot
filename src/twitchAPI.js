@@ -20,6 +20,7 @@ export async function getChannel(channelId) {
 
 export async function getTeam(teamName) {
   const { data: { data: [team] } } = await helixAPI.get(`/teams?name=${teamName}`);
+  team.users = team.users || [];
   return team;
 }
 

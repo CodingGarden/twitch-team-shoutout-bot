@@ -19,6 +19,7 @@ const client = new tmi.Client({
 
 function initBot(teams) {
   const membersById = teams.reduce((byId, { users, team_name }) => {
+    // console.log({ users, team_name });
     users
       .forEach((member) => {
         if (!byId.has(member.user_id)) {
@@ -28,7 +29,7 @@ function initBot(teams) {
       });
     return byId;
   }, new Map());
-  console.log(membersById);
+  // console.log(membersById);
   const shoutoutsById = new Map();
 
   client.connect();
